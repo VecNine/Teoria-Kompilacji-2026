@@ -69,7 +69,7 @@ class Scanner:
 
 
     def identifier(self) -> str:
-        buffer = [self.peak()]
+        buffer = [self.peek()()]
         while self.peek_next().isalpha():
             char = self.advance()
             buffer.append(char)
