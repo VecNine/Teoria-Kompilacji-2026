@@ -68,6 +68,14 @@ class Scanner:
         return "".join(buffer)
 
 
+    def identifier(self) -> str:
+        buffer = [self.peak()]
+        while self.peek_next().isalpha():
+            char = self.advance()
+            buffer.append(char)
+        value_string = "".join(buffer)
+        return value_string
+
     def scan_token(self) -> None:
         """
         Proces skanowania tokenu.
