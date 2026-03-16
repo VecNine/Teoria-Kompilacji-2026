@@ -36,7 +36,6 @@ class Scanner:
         self.tokens.append(Token(TokenType.EOF, None))
         return self.tokens
 
-
     def is_at_end(self) -> bool:
         """Czy koniec wyrażenia."""
         return self.current >= len(self.source)
@@ -59,6 +58,14 @@ class Scanner:
         if self.current + 1 > len(self.source):
             return ""
         return self.source[self.current + 1]
+
+    def number(self) -> str:
+        """Skanowanie numeru"""
+        buffer: list = [self.peek()]
+
+        while self.peek_next().isdigit():
+            buffer.append(self.advance())
+        return "".join(buffer)
 
 
     def scan_token(self) -> None:
@@ -85,8 +92,8 @@ class Scanner:
             case " ":
                 pass
             case _ if c.isdigit():
-                self.number()
+                self.tokens.append(Token(TokenType.NUM, self.number()))
             case _ if c.isalpha():
-                self.indentifier()
+                self.tokens.append(Token(TokenType.ID, self.identifier()))
             case _:
                 raise Exception(f"Błąd leksykalny w kolumnie {self.start + 1}: Nieoczekiwany znak {c}")
