@@ -38,22 +38,21 @@ class Scanner:
 
     def peek_next(self) -> str:
         """Pobiera następny znak"""
-        if self.current + 1 > len(self.source):
+        if self.current + 1 >= len(self.source):
             return ""
         return self.source[self.current + 1]
 
     def number(self) -> str:
         """Skanowanie numeru"""
         buffer: list = [self.peek()]
-
-        while self.peek_next().isdigit():
+        while self.peek().isdigit():
             buffer.append(self.advance())
         return "".join(buffer)
 
 
     def identifier(self) -> str:
         buffer = [self.peek()]
-        while self.peek_next().isalpha():
+        while self.peek().isalpha():
             char = self.advance()
             buffer.append(char)
         value_string = "".join(buffer)
@@ -88,3 +87,8 @@ class Scanner:
                 self.tokens.append(Token(TokenType.ID, self.identifier()))
             case _:
                 raise Exception(f"Błąd leksykalny w kolumnie {self.start + 1}: Nieoczekiwany znak {c}")
+
+    def __str__(self):
+        buffer: list = [f"[{t.token_type.name}] " for t in self.tokens]
+
+        return "".join(buffer)
