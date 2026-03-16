@@ -1,22 +1,5 @@
-from enum import StrEnum, auto
-from typing import Any
-
-
-class TokenType(StrEnum):
-    NUM = auto()
-    ID = auto()
-    LB = auto()
-    RB = auto()
-    MUL = auto()
-    DIV = auto()
-    PLUS = auto()
-    MINUS = auto()
-    EOF = auto()
-
-class Token:
-    def __init__(self, token_type: TokenType, value: Any):
-        self.token_type = token_type
-        self.value = value
+from lex_token import Token
+from token_enum import TokenType
 
 class Scanner:
     tokens: list[Token]
@@ -69,7 +52,7 @@ class Scanner:
 
 
     def identifier(self) -> str:
-        buffer = [self.peek()()]
+        buffer = [self.peek()]
         while self.peek_next().isalpha():
             char = self.advance()
             buffer.append(char)
