@@ -42,16 +42,16 @@ class Scanner:
             return ""
         return self.source[self.current + 1]
 
-    def number(self) -> str:
+    def number(self, first_char: str) -> str:
         """Skanowanie numeru"""
-        buffer: list = [self.peek()]
+        buffer: list = [first_char]
         while self.peek().isdigit():
             buffer.append(self.advance())
         return "".join(buffer)
 
 
-    def identifier(self) -> str:
-        buffer = [self.peek()]
+    def identifier(self, first_char: str) -> str:
+        buffer = [first_char]
         while self.peek().isalpha():
             char = self.advance()
             buffer.append(char)
@@ -82,13 +82,19 @@ class Scanner:
             case " ":
                 pass
             case _ if c.isdigit():
-                self.tokens.append(Token(TokenType.NUM, self.number()))
+                self.tokens.append(Token(TokenType.NUM, self.number(c)))
             case _ if c.isalpha():
-                self.tokens.append(Token(TokenType.ID, self.identifier()))
+                self.tokens.append(Token(TokenType.ID, self.identifier(c)))
             case _:
                 raise Exception(f"Błąd leksykalny w kolumnie {self.start + 1}: Nieoczekiwany znak {c}")
 
     def __str__(self):
         buffer: list = [f"[{t.token_type.name}] " for t in self.tokens]
+
+        return "".join(buffer)
+
+    def details(self) -> str:
+        """Wyświetlanie detali"""
+        buffer: list = [f"[{t.token_type.name}, {t.value}] " for t in self.tokens]
 
         return "".join(buffer)
