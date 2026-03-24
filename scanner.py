@@ -100,8 +100,6 @@ class Scanner:
 
         return "".join(buffer)
 
-    def toHtml(self) -> None:
+    def to_html(self) -> None:
         """Zwraca plik HTML"""
-        html
-
-        return "".join(buffer)
+        raise NotImplementedError()
