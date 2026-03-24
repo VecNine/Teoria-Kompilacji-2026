@@ -1,7 +1,7 @@
 from scanner import Scanner
 
 if __name__ == '__main__':
-    equation = "15*34+(4 +  23233)/1  abc"
+    equation = "15*34+(4 +  23233)/1 =  abc"
     scanner = Scanner(equation)
     scanner.scan()
     scanner.to_html("plik.html")

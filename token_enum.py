@@ -10,3 +10,4 @@ class TokenType(StrEnum):
     PLUS = auto()
     MINUS = auto()
     EOF = auto()
+    EQ = auto()

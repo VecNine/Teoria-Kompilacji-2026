@@ -18,6 +18,7 @@ class Color:
         TokenType.MUL: "#44ad4d",  # Ciemnozielony
         TokenType.DIV: "#44ad4d",  # Ciemnozielony
         TokenType.EOF: "#6272a4",  # Szary
+        TokenType.EQ: "#6272a4"
     }
 
     @staticmethod

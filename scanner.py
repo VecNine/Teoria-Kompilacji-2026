@@ -80,6 +80,8 @@ class Scanner:
                 self.tokens.append(Token(TokenType.MUL, c))
             case "/":
                 self.tokens.append(Token(TokenType.DIV, c))
+            case "=":
+                self.tokens.append(Token(TokenType.EQ, c))
             case " ":
                 pass
             case _ if c.isdigit():
