@@ -1,28 +1,36 @@
 import json
 import html
 import decorators
+from token_enum import TokenType
+from lex_token import Token
 
 @staticmethod
 class Color:
     """Klasa pomocnicza do kolorowania składni w HTML."""
+    _token_colors = {
+        TokenType.NUM: "#bd93f9",  # Fioletowy
+        TokenType.ID: "#8be9fd",  # Jasnoniebieski
+        TokenType.LB: "#a6e22e",  # Jasnozielony (Nawiasy)
+        TokenType.RB: "#a6e22e",  # Jasnozielony (Nawiasy)
+        TokenType.PLUS: "#44ad4d",  # Ciemnozielony
+        TokenType.MINUS: "#44ad4d",  # Ciemnozielony
+        TokenType.MUL: "#44ad4d",  # Ciemnozielony
+        TokenType.DIV: "#44ad4d",  # Ciemnozielony
+        TokenType.EOF: "#6272a4",  # Szary
+    }
 
     @staticmethod
-    def red(text: str) -> str:
-        return f'<span style="color: #E06C75;">{html.escape(text)}</span>'
+    def get_color_by_type(token_type: TokenType):
+        return Color._token_colors[token_type]
 
     @staticmethod
-    def dark_green(text: str) -> str:
-        return f'<span style="color: #2E8B57;">{html.escape(text)}</span>'
+    def get_color(token: Token) -> str:
+        return Color._token_colors[token.token_type]
 
     @staticmethod
-    def blue(text: str) -> str:
-        return f'<span style="color: #61AFEF;">{html.escape(text)}</span>'
+    def get_color_html(token: Token) -> str:
+        """Zwraca gotowy tag <span> z kolorem inline."""
+        color = Color.get_color(token)
 
-    @staticmethod
-    def light_green(text: str) -> str:
-        return f'<span style="color: #98C379;">{html.escape(text)}</span>'
-
-    @staticmethod
-    def plain(text: str) -> str:
-        # Dla zwykłego tekstu (np. nawiasów, spacji), który nie ma koloru, ale nadal musi być bezpieczny
-        return html.escape(text)
+        value = str(token.value) if token.value is not None else ""
+        return f'<span style="color: {color};">{html.escape(value)}</span>'

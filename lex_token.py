@@ -7,20 +7,10 @@ class Token:
         self.token_type = token_type
         self.value = value
 
-    def toHtml(self) -> str:
+    def get_color(self) -> str:
+        """Hex coloring"""
+        return Color.get_color(self)
+
+    def get_color_html(self) -> str:
         """Html coloring"""
-        match self.token_type:
-            case TokenType.LB | TokenType.RB:
-                return f"{Color.light_green(self.token_type)}"
-            case TokenType.PLUS:
-                return f"{Color.dark_green(self.token_type)}"
-            case TokenType.MUL:
-                return f"{Color.dark_green(self.token_type)}"
-            case TokenType.MINUS:
-                return f"{Color.dark_green(self.token_type)}"
-            case TokenType.DIV:
-                return f"{Color.dark_green(self.token_type)}"
-            case TokenType.ID:
-                return f"{Color.blue(self.token_type)}"
-            case _:
-                return f"{Color.plain(self.token_type)}"
+        return Color.get_color_html(self)

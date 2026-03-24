@@ -1,5 +1,6 @@
 from lex_token import Token
 from token_enum import TokenType
+from config import Config
 
 class Scanner:
     tokens: list[Token]
@@ -96,5 +97,11 @@ class Scanner:
     def details(self) -> str:
         """Wyświetlanie detali"""
         buffer: list = [f"[{t.token_type.name}, {t.value}] " for t in self.tokens]
+
+        return "".join(buffer)
+
+    def toHtml(self) -> None:
+        """Zwraca plik HTML"""
+        html
 
         return "".join(buffer)
