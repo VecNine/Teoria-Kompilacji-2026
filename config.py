@@ -28,9 +28,7 @@ class Config:
             "</style>"
         ]
 
-        # Automatyczna iteracja po wszystkich typach tokenów z Enum
         for token_type in TokenType:
-            # Wywołanie statycznej metody z klasy Color
             color = Color.get_color_by_type(token_type)
             css_lines.insert(-1, f".{token_type.name} {{ color: {color}; }}")
 

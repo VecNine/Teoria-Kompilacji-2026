@@ -1,10 +1,11 @@
-import json
-import html
-import decorators
+from __future__ import annotations # Pozwala używać nazwy klasy przed jej definicją
+from typing import TYPE_CHECKING
 from token_enum import TokenType
-from lex_token import Token
+import html
 
-@staticmethod
+if TYPE_CHECKING:
+    from lex_token import Token
+
 class Color:
     """Klasa pomocnicza do kolorowania składni w HTML."""
     _token_colors = {

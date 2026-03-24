@@ -100,6 +100,28 @@ class Scanner:
 
         return "".join(buffer)
 
-    def to_html(self) -> None:
-        """Zwraca plik HTML"""
-        raise NotImplementedError()
+    def to_html(self, path: str) -> None:
+        """
+        Generuje kompletny plik HTML i zapisuje go pod wskazaną ścieżką.
+
+        Args:
+            path (str): Ścieżka do pliku wynikowego (np. 'output.html').
+        """
+        header = Config.get_full_header()
+
+        open_tags = Config.get("open_tags")
+
+        tokens_content = "".join([t.get_color_html() for t in self.tokens])
+
+        close_tags = Config.get("close_tags")
+
+        final_html = f"{header}{open_tags}{tokens_content}{close_tags}"
+
+        try:
+            with open(path, "w", encoding="utf-8") as file:
+                file.write(final_html)
+            print(f"Sukces: Plik został zapisany w {path}")
+        except Exception as e:
+            print(f"Błąd podczas zapisywania pliku: {e}")
+
+        return None
