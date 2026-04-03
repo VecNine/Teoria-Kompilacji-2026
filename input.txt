@@ -1,0 +1,4 @@
+if x == 10
+print y
+while a <= 5
+x = x + 1

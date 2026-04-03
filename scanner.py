@@ -118,7 +118,7 @@ class Scanner:
                     self.tokens.append(Token(TokenType.EQUAL_GREATER, ">="))
                 else:
                     self.tokens.append(Token(TokenType.GREATER, ">"))
-            case " ":
+            case " " | "\r" | "\t" | "\n":
                 pass
             case _ if c.isdigit():
                 self.tokens.append(Token(TokenType.NUM, self.number(c)))
