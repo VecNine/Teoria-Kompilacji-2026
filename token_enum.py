@@ -11,3 +11,16 @@ class TokenType(StrEnum):
     MINUS = auto()
     EOF = auto()
     EQ = auto()
+
+    IF = auto()
+    ELSE = auto()
+    WHILE = auto()
+    PRINT = auto()
+
+
+    EQUAL_EQUAL = auto()  # ==
+    BANG_EQUAL = auto()  # !=
+    LESS = auto()  # <
+    EQUAL_LESS = auto()
+    GREATER = auto()  # >
+    EQUAL_GREATER = auto()

@@ -18,7 +18,18 @@ class Color:
         TokenType.MUL: "#44ad4d",  # Ciemnozielony
         TokenType.DIV: "#44ad4d",  # Ciemnozielony
         TokenType.EOF: "#6272a4",  # Szary
-        TokenType.EQ: "#6272a4"
+        TokenType.EQ: "#6272a4",
+        TokenType.IF: "#ff79c6",  # Różowy (Keywords)
+        TokenType.ELSE: "#ff79c6",
+        TokenType.WHILE: "#ff79c6",
+        TokenType.PRINT: "#50fa7b",  # Zielony (Functions)
+        TokenType.EQUAL_EQUAL: "#ffb86c",  # Pomarańczowy (Ops)
+        TokenType.BANG_EQUAL: "#ffb86c",
+        TokenType.LESS: "#ffb86c",
+        TokenType.GREATER: "#ffb86c",
+        TokenType.EQUAL_LESS: "#deb86c",
+        TokenType.EQUAL_GREATER: "#deb86c",
+
     }
 
     @staticmethod

@@ -4,6 +4,12 @@ from config import Config
 
 class Scanner:
     tokens: list[Token]
+    KEYWORDS = {
+        "if": TokenType.IF,
+        "else": TokenType.ELSE,
+        "while": TokenType.WHILE,
+        "print": TokenType.PRINT,
+    }
 
     def __init__(self, source: str):
         self.source = source
@@ -53,11 +59,19 @@ class Scanner:
 
     def identifier(self, first_char: str) -> str:
         buffer = [first_char]
-        while self.peek().isalpha():
-            char = self.advance()
-            buffer.append(char)
-        value_string = "".join(buffer)
-        return value_string
+        while self.peek().isalnum():
+            buffer.append(self.advance())
+
+        return "".join(buffer)
+
+    def match(self, expected: str) -> bool:
+        """Sprawdza następny znak bez przesuwania kursora, jeśli nie pasuje."""
+        if self.is_at_end():
+            return False
+        if self.source[self.current] != expected:
+            return False
+        self.current += 1  # Jeśli pasuje, przesuń kursor o 1 do przodu
+        return True
 
     def scan_token(self) -> None:
         """
@@ -81,13 +95,39 @@ class Scanner:
             case "/":
                 self.tokens.append(Token(TokenType.DIV, c))
             case "=":
-                self.tokens.append(Token(TokenType.EQ, c))
+                if self.match("="):
+                    self.tokens.append(Token(TokenType.EQUAL_EQUAL, "=="))
+                else:
+                    self.tokens.append(Token(TokenType.EQ, "="))
+            case "!":
+                if self.match("="):
+                    self.tokens.append(Token(TokenType.BANG_EQUAL, "!="))
+                else:
+                    raise Exception(f"Błąd: Oczekiwano '=' po '!' na pozycji {self.current}")
+            case "<":
+                if self.match("="):
+                    # Jeśli dodasz LESS_EQUAL do TokenType, możesz to tu obsłużyć
+                    self.tokens.append(Token(TokenType.EQUAL_LESS, "<="))
+                else:
+                    self.tokens.append(Token(TokenType.LESS, "<"))
+
+                # Obsługa GREATER (> lub >=)
+            case ">":
+                if self.match("="):
+                    # Jeśli dodasz GREATER_EQUAL do TokenType, możesz to tu obsłużyć
+                    self.tokens.append(Token(TokenType.EQUAL_GREATER, ">="))
+                else:
+                    self.tokens.append(Token(TokenType.GREATER, ">"))
             case " ":
                 pass
             case _ if c.isdigit():
                 self.tokens.append(Token(TokenType.NUM, self.number(c)))
             case _ if c.isalpha():
-                self.tokens.append(Token(TokenType.ID, self.identifier(c)))
+                text_value = self.identifier(c)
+
+                token_type = self.KEYWORDS.get(text_value, TokenType.ID)
+
+                self.tokens.append(Token(token_type, text_value))
             case _:
                 raise Exception(f"Błąd leksykalny w kolumnie {self.start + 1}: Nieoczekiwany znak {c}")
 
